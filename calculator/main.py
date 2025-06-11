@@ -17,9 +17,9 @@ def main():
     try:
         result = calculator.evaluate(expression=expression)
         to_print = render(expression=expression, result=result)
-        print(to_print)
+        return to_print
     except Exception as e:
-        print(f"Error: {e}")
+        return f"Error: {e}"
 
 if __name__ == "__main__":
     main()
