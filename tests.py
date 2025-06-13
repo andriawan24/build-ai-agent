@@ -1,6 +1,4 @@
 # import unittest
-from functions.run_python import run_python
-from functions.get_file_content import get_file_content
 from functions.get_files_info import get_files_info
 import unittest
 

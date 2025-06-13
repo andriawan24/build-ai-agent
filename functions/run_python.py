@@ -1,7 +1,8 @@
 import os
 import subprocess
+from google.genai import types
 
-def run_python(working_directory, file_path):
+def run_python_file(working_directory, file_path):
     full_path = os.path.join(os.path.abspath(working_directory), file_path)
 
     if file_path.startswith("..") or file_path.startswith("/"):
@@ -36,3 +37,17 @@ def run_python(working_directory, file_path):
         result_text += f"Error: executing Python file: {e}"
 
     return result_text
+
+schema_run_python_file = types.FunctionDeclaration(
+    name="run_python_file",
+    description="Execute provided python file from the path, constrained to the working directory",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="A file path to the python inside working directory. If not provided just say that we need the valid file to run"
+            )
+        }
+    )
+)

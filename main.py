@@ -3,9 +3,8 @@ import os
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-from functions.get_files_info import get_files_info
 from prompts import system_prompt
-from call_function import available_functions
+from call_function import available_functions, call_function
 
 model_name = "gemini-2.0-flash-001"
 
@@ -22,7 +21,7 @@ def main():
         exit(1)
 
     user_prompt = sys.argv[1]
-    is_verbose = "-v" in sys.argv or "--verbose" in sys.argv
+    is_verbose = any(arg in sys.argv for arg in ["-v", "--verbose"])
 
     client = genai.Client(api_key=api_key)
 
@@ -49,7 +48,9 @@ def generate_content(client, messages, is_verbose):
     function_call_parts = response.function_calls
     if function_call_parts:
         for function in function_call_parts:
-            print(f"Calling function: {function.name}({function.args})")
+            result = call_function(function, is_verbose)
+            if is_verbose:
+                print(f"-> {result.parts[0].function_response.response}")
     else:
         print(response.text)
 
