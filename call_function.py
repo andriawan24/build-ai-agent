@@ -19,8 +19,6 @@ def call_function(function_call_part, verbose=False):
     else:
         print(f" - Calling function: {function_call_part.name}")
 
-    working_directory = "./calculator"
-
     functions = {
         schema_get_file_content.name: get_file_content,
         schema_get_files_info.name: get_files_info,
@@ -28,7 +26,8 @@ def call_function(function_call_part, verbose=False):
         schema_run_python_file.name: run_python_file
     }
 
-    if function_call_part.name not in functions:
+    function_name = function_call_part.name
+    if function_name not in functions:
         return types.Content(
             role="tool",
             parts=[
@@ -39,13 +38,15 @@ def call_function(function_call_part, verbose=False):
             ],
         )
     
-    result = functions[function_call_part.name](working_directory=working_directory, **function_call_part.args)
+    args = dict(function_call_part.args)
+    args['working_directory'] = "./calculator"
+    result = functions[function_name](**args)
 
     return types.Content(
         role="tool",
         parts=[
             types.Part.from_function_response(
-                name=function_call_part.name,
+                name=function_name,
                 response={"result": result},
             )
         ],

@@ -26,7 +26,7 @@ class Calculator:
 
         for token in tokens:
             if token in self.operators:
-                while(
+                while (
                     operators
                     and operators[-1] in self.operators
                     and self.precedence[operators[-1]] >= self.precedence[token]

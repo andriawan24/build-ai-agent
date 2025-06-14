@@ -10,16 +10,15 @@ def main():
         print("Calculator App")
         print("Usage: python main.py \"<expression>\"")
         print("Example: python main.py \"3 + 5\"")
-        return
 
     expression = " ".join(sys.argv[1])
 
     try:
         result = calculator.evaluate(expression=expression)
         to_print = render(expression=expression, result=result)
-        return to_print
+        print(to_print)
     except Exception as e:
-        return f"Error: {e}"
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     main()

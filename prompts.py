@@ -8,5 +8,5 @@ system_prompt = """
     - Execute python files with optional arguments
     - Write or overwrite files
 
-    All paths you provide should be relative to the working directory. You do not need to specify the working directory in your function calls as it is automatically injected for security reasons.
+    All paths you provide should be relative to the working directory. You do not need to specify the working directory in your function calls as it is automatically injected for security reasons. You must stick to the calculator package, if there are no file found in the module, just take a look to any files in it, don't ever create a new file unless I aksed
 """
